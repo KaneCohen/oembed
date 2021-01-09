@@ -1,0 +1,45 @@
+{
+  "name": "cohensive/oembed",
+  "description": "Media embed generation using OEmbed protocol.",
+  "keywords": ["media", "youtube", "vimeo", "oembed", "embed", "laravel"],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Kane Cohen",
+      "email": "kanecohen@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "illuminate/support": "^5.8|^6.0|^7.0|^8.0",
+    "symfony/http-client": "^5.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0|^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cohensive\\OEmbed\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Cohensive\\OEmbed\\Test\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Cohensive\\OEmbed\\OEmbedServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "config": {
+      "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
