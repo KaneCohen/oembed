@@ -17,7 +17,7 @@ Add following require to your `composer.json` file:
 ~~~
 "cohensive/oembed": "dev-master"
 // or
-"cohensive/oembed": "0.1"
+"cohensive/oembed": "0.2"
 ~~~
 
 Then run `composer install` or `composer update` to download it and autoload.
