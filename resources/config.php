@@ -23,7 +23,7 @@ return [
     'options' => [
         // Sets global embed width where applicable. If set to null - will be
         // automatically calculated if global height is set.
-        'width' => 800,
+        'width' => null,
 
         // Sets global embed height where applicable. If set to null - will be
         // automatically calculated if global width is set.

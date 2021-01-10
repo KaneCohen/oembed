@@ -47,7 +47,7 @@ class RegexExtractor extends Extractor
             } else {
                 $data[$key] = str_replace('{protocol}', $protocol, $data[$key]);
                 for ($i = 1; $i < count($matches); $i++) {
-                    $data[$key] = str_replace('{'.$i.'}', $matches[$i], $data[$key]);
+                    $data[$key] = str_replace('{' . $i . '}', $matches[$i], $data[$key]);
                 }
             }
         }

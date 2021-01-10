@@ -104,28 +104,43 @@ class EmbedHtml
     }
 
     /**
+     * Extracts and returns an array of options for a current HTML element type.
+     */
+    protected function getTypeOptions(array $options): array
+    {
+        if (isset($options['html'])) {
+            return $options['html'][$this->type] ?? [];
+        }
+
+        return [];
+    }
+
+    /**
      * Merge and apply local and global options to the provider attributes.
      */
     protected function applyOptions(array $attrs, array $options): array
     {
+        $width = $options['width'] ?? null;
+        $height = $options['height'] ?? null;
+
         if (isset($attrs['width']) && isset($attrs['height'])) {
             $ratio = $attrs['width'] / $attrs['height'];
 
-            if (isset($options['width']) && !isset($options['height'])) {
-                $attrs['width'] = $options['width'];
-                $attrs['height'] = (int) $options['width'] / $ratio;
+            if ($width) {
+                $attrs['width'] = $width;
+            } else {
+                $attrs['width'] = (int) ($attrs['height'] * $ratio);
             }
 
-            if (isset($options['height']) && !isset($options['width'])) {
-                $attrs['height'] = $options['height'];
-                $attrs['width'] = (int) $options['height'] * $ratio;
+            if ($height) {
+                $attrs['height'] = $height;
+            } else {
+                $attrs['height'] = (int) ($attrs['width'] / $ratio);
             }
         }
 
-        if ($options) {
-            $elementOptions = $options['html'][$this->type] ?? [];
-            $attrs = array_merge($attrs, $elementOptions);
-        }
+        $typeOptions = $this->getTypeOptions($options);
+        $attrs = array_merge($attrs, $typeOptions);
 
         return $attrs;
     }

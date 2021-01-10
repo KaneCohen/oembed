@@ -40,11 +40,15 @@ class OEmbed
     {
         $extractor = $this->getExtractor($url);
 
-        if (!$extractor) return null;
+        if (!$extractor) {
+            return null;
+        }
 
         $embed = $extractor->fetch();
 
-        if (!$embed) return null;
+        if (!$embed) {
+            return null;
+        }
 
         $embed->setOptions($this->options)->setAmp($this->amp);
 
