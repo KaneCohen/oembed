@@ -162,6 +162,15 @@ class Embed
     }
 
     /**
+     * Returns string describing media type. According to OEmbed spec it could be:
+     * one of these: photo, video, link, rich
+     */
+    public function mediaType(): string
+    {
+        return $this->data['type'];
+    }
+
+    /**
      * Returns boolean flag telling if given embed data has a thumbnail.
      */
     public function hasThumbnail(): bool
