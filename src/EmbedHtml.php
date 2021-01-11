@@ -31,9 +31,6 @@ class EmbedHtml
 
     /**
      * Return AMP-friendly HTML for media provider.
-     *
-     * @param array $options
-     * @return string
      */
     public function ampHtml(array $options = []): string
     {
@@ -58,10 +55,6 @@ class EmbedHtml
 
     /**
      * Constructs <video> HTML-element based on an array of provider attributes.
-     *
-     * @param array $attrs
-     * @param boolean $amp
-     * @return void
      */
     protected function video(array $attrs, bool $amp = false): string
     {

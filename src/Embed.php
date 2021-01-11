@@ -128,9 +128,6 @@ class Embed
 
     /**
      * Returns string with AMP-friendly HTML to embed in an application.
-     *
-     * @param array $options
-     * @return string
      */
     public function ampHtml(array $options = null): string
     {
@@ -181,7 +178,6 @@ class Embed
     /**
      * Returns thumbnail data in an array form containing url and its dimensions.
      *
-     * @return array|null
      */
     public function thumbnail(): ?array
     {
@@ -226,8 +222,6 @@ class Embed
 
     /**
      * Converts Embed instance into json string.
-     *
-     * @return string
      */
     public function toJson(): string
     {
