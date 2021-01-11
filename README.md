@@ -1,3 +1,7 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/KaneCohen/oembed/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/KaneCohen/oembed/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/KaneCohen/oembed/badges/build.png?b=master)](https://scrutinizer-ci.com/g/KaneCohen/oembed/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/KaneCohen/oembed/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+
 # OEmbed
 
 PHP library to retreive and display embed media from various media providers that support OEmbed data format. Websites such as YouTube, Vimeo, Twitter, Imgur and others.
@@ -13,7 +17,7 @@ Add following require to your `composer.json` file:
 ~~~
 "cohensive/oembed": "dev-master"
 // or
-"cohensive/oembed": "0.1"
+"cohensive/oembed": "0.2"
 ~~~
 
 Then run `composer install` or `composer update` to download it and autoload.
