@@ -10,7 +10,7 @@ class HtmlBuilder
     public function __construct(
         protected string $type,
         protected string|array $html,
-        protected string|null $script = null
+        protected ?string $script = null
     ) {
     }
 

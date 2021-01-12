@@ -1,6 +1,7 @@
 <?php
 namespace Cohensive\OEmbed;
 
+use Cohensive\OEmbed\Exceptions\HtmlParsingException;
 use DOMDocument;
 
 class Embed
@@ -73,7 +74,7 @@ class Embed
         }
 
         if ($this->type == self::TYPE_OEMBED) {
-            $this->html = $this->extractOHtmlBuilder($data['html']);
+            $this->html = $this->extractOEmbedHtml($data['html']);
         } else {
             $this->html = $this->extractRegexHtml($data['html']);
         }
@@ -255,11 +256,11 @@ class Embed
     /**
      * Returns HtmlBuilder instance of OEmbed media provider HTML string.
      */
-    protected function extractOHtmlBuilder(string $html): HtmlBuilder
+    protected function extractOEmbedHtml(string $html): HtmlBuilder
     {
         $script = null;
         $doc = new DOMDocument();
-        @$doc->loadHTML("<html><body>$html</body></html>");
+        $doc->loadHTML("<html><body>$html</body></html>", LIBXML_NOERROR);
         $body = $doc->documentElement->lastChild;
 
         $scripts = $body->getElementsByTagName('script');
@@ -268,7 +269,11 @@ class Embed
             break;
         }
 
-        if ($body->firstChild->nodeName === 'iframe') {
+        if (!$body->firstChild) {
+            throw new HtmlParsingException();
+        }
+
+        if ($body->firstChild && $body->firstChild->nodeName === 'iframe') {
             $attrs = [];
 
             foreach ($body->firstChild->attributes as $attribute) {
