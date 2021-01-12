@@ -1,12 +1,25 @@
 <?php
 namespace Cohensive\OEmbed;
 
-class EmbedHtml
+class HtmlBuilder
 {
+    const TYPE_RAW = 'raw';
+    const TYPE_IFRAME = 'iframe';
+    const TYPE_VIDEO = 'video';
+
     public function __construct(
         protected string $type,
-        protected string|array $html
+        protected string|array $html,
+        protected string|null $script = null
     ) {
+    }
+
+    /**
+     * Returns current type.
+     */
+    public function type(): string
+    {
+        return $this->type;
     }
 
     /**
@@ -18,11 +31,11 @@ class EmbedHtml
             $attrs = $this->applyOptions($this->html, $options);
         }
 
-        if ($this->type === 'iframe') {
+        if ($this->type === self::TYPE_IFRAME) {
             return $this->iframe($attrs, $amp);
         }
 
-        if ($this->type === 'video') {
+        if ($this->type === self::TYPE_VIDEO) {
             return $this->video($attrs, $amp);
         }
 
@@ -83,6 +96,14 @@ class EmbedHtml
         $html .= "</$tag>";
 
         return $html;
+    }
+
+    /**
+     * Returns script source if available.
+     */
+    public function script(): ?string
+    {
+        return $this->script;
     }
 
     /**

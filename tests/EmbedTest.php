@@ -1,6 +1,7 @@
 <?php
 
 use Cohensive\OEmbed\Embed;
+use Cohensive\OEmbed\HtmlBuilder;
 use Cohensive\OEmbed\OEmbed;
 use PHPUnit\Framework\TestCase;
 
@@ -52,5 +53,12 @@ class EmbedTest extends TestCase {
     {
         $this->assertEquals($this->data, $this->embed->toArray());
         $this->assertEquals(json_encode($this->data), $this->embed->toJson());
+    }
+
+    public function testHtmlBuilderClass()
+    {
+        $this->assertInstanceOf(HtmlBuilder::class, $this->embed->htmlBuilder());
+        $this->assertEquals('iframe', $this->embed->htmlBuilder()->type());
+        $this->assertEquals('iframe', $this->embed->htmlType());
     }
 }

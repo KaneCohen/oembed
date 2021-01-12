@@ -32,7 +32,7 @@ class Embed
     /**
      * Class containing Embed HTML code.
      */
-    protected EmbedHtml $html;
+    protected HtmlBuilder $html;
 
     /**
      * Thumbnail data if available.
@@ -73,7 +73,7 @@ class Embed
         }
 
         if ($this->type == self::TYPE_OEMBED) {
-            $this->html = $this->extractOEmbedHtml($data['html']);
+            $this->html = $this->extractOHtmlBuilder($data['html']);
         } else {
             $this->html = $this->extractRegexHtml($data['html']);
         }
@@ -108,6 +108,14 @@ class Embed
     }
 
     /**
+     * Returns current HtmlBuilder instance.
+     */
+    public function htmlBuilder(): HtmlBuilder
+    {
+        return $this->html;
+    }
+
+    /**
      * Returns string with HTML to embed in application. Will return AMP-friendly
      * HTML if global amp mode is enabled and not overwitten.
      */
@@ -135,11 +143,27 @@ class Embed
     }
 
     /**
+     * Return script source if available in embed html.
+     */
+    public function script(): ?string
+    {
+        return $this->html->script();
+    }
+
+    /**
      * Returns embed provider type.
      */
     public function type(): int
     {
         return $this->type;
+    }
+
+    /**
+     * Returns embed html type.
+     */
+    public function htmlType(): string
+    {
+        return $this->html->type();
     }
 
     /**
@@ -229,13 +253,20 @@ class Embed
     }
 
     /**
-     * Returns EmbedHtml instance of OEmbed media provider HTML string.
+     * Returns HtmlBuilder instance of OEmbed media provider HTML string.
      */
-    protected function extractOEmbedHtml(string $html): EmbedHtml
+    protected function extractOHtmlBuilder(string $html): HtmlBuilder
     {
+        $script = null;
         $doc = new DOMDocument();
-        $doc->loadHTML('<html><body>' . $html . '</body></html>');
-        $body = $doc->getElementsByTagName('body')[0];
+        @$doc->loadHTML("<html><body>$html</body></html>");
+        $body = $doc->documentElement->lastChild;
+
+        $scripts = $body->getElementsByTagName('script');
+        foreach ($scripts as $node) {
+            $script = $node->getAttribute('src');
+            break;
+        }
 
         if ($body->firstChild->nodeName === 'iframe') {
             $attrs = [];
@@ -244,18 +275,18 @@ class Embed
                 $attrs[$attribute->name] = $attribute->value;
             }
 
-            return new EmbedHtml('iframe', $attrs);
+            return new HtmlBuilder(HtmlBuilder::TYPE_IFRAME, $attrs, $script);
         }
 
-        return new EmbedHtml('html', $html);
+        return new HtmlBuilder(HtmlBuilder::TYPE_RAW, $html, $script);
     }
 
     /**
-     * Returns EmbedHtml instance of Regex media provider HTML string.
+     * Returns HtmlBuilder instance of Regex media provider HTML string.
      */
-    protected function extractRegexHtml(array $html): EmbedHtml
+    protected function extractRegexHtml(array $html): HtmlBuilder
     {
         $type = array_key_first($html);
-        return new EmbedHtml($type, $html[$type]);
+        return new HtmlBuilder($type, $html[$type]);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
 use Cohensive\OEmbed\Embed;
-use Cohensive\OEmbed\EmbedHtml;
+use Cohensive\OEmbed\HtmlBuilder;
 use Cohensive\OEmbed\OEmbed;
 use PHPUnit\Framework\TestCase;
 
-class EmbedHtmlTest extends TestCase {
+class HtmlBuilderTest extends TestCase {
 
     protected $oembed;
 
@@ -20,12 +20,12 @@ class EmbedHtmlTest extends TestCase {
 
     public function setUp(): void
     {
-        $this->html = new EmbedHtml('iframe', $this->attrs);
+        $this->html = new HtmlBuilder('iframe', $this->attrs);
     }
 
     public function testInstance()
     {
-        $this->assertInstanceOf(EmbedHtml::class, $this->html);
+        $this->assertInstanceOf(HtmlBuilder::class, $this->html);
     }
 
     public function tesToArray()

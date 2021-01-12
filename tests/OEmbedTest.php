@@ -126,4 +126,15 @@ class OEmbedTest extends TestCase {
         $this->assertEquals($html, $embed->html());
         $this->assertEquals($ampHtml, $embed->ampHtml());
     }
+
+    public function testOembedScriptTag()
+    {
+        $html = '<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@art._.gorl/video/6702887440236940549" data-video-id="6702887440236940549" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@art._.gorl" href="https://www.tiktok.com/@art._.gorl">@art._.gorl</a> <p>pt. 1 of turning my room into my own space // <a title="bed" target="_blank" href="https://www.tiktok.com/tag/bed">#bed</a> <a title="redoingmyroom" target="_blank" href="https://www.tiktok.com/tag/redoingmyroom">#redoingmyroom</a></p> <a target="_blank" title="♬ original sound - tiff" href="https://www.tiktok.com/music/original-sound-6689804660171082501">♬ original sound - tiff</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>';
+        $url = 'https://www.tiktok.com/@art._.gorl/video/6702887440236940549';
+        $embed = $this->oembed->get($url);
+        $script = 'https://www.tiktok.com/embed.js';
+
+        $this->assertEquals($html, $embed->html());
+        $this->assertEquals($script, $embed->script());
+    }
 }
