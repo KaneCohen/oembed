@@ -29,14 +29,14 @@ class HtmlBuilder
     {
         if (is_array($this->html)) {
             $attrs = $this->applyOptions($this->html, $options);
-        }
 
-        if ($this->type === self::TYPE_IFRAME) {
-            return $this->iframe($attrs, $amp);
-        }
+            if ($this->type === self::TYPE_IFRAME) {
+                return $this->iframe($attrs, $amp);
+            }
 
-        if ($this->type === self::TYPE_VIDEO) {
-            return $this->video($attrs, $amp);
+            if ($this->type === self::TYPE_VIDEO) {
+                return $this->video($attrs, $amp);
+            }
         }
 
         return $this->html;
