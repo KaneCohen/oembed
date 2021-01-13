@@ -184,6 +184,34 @@ class Embed
     }
 
     /**
+     * Returns width of the embed. 0 if not set.
+     */
+    public function width(): int
+    {
+        return $this->data['width'] ?? 0;
+    }
+
+    /**
+     * Returns height of the embed. 0 if not set.
+     */
+    public function height(): int
+    {
+        return $this->data['height'] ?? 0;
+    }
+
+    /**
+     * Returns width/height ratio of the embed. 0 if dimensions are not set.
+     */
+    public function ratio(): float
+    {
+        if (isset($this->data['width']) && isset($this->data['height'])) {
+            return $this->data['width'] / $this->data['height'];
+        }
+
+        return 0;
+    }
+
+    /**
      * Returns string describing media type. According to OEmbed spec it could be:
      * one of these: photo, video, link, rich
      */
