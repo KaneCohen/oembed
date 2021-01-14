@@ -39,6 +39,20 @@ return [
                 'controls' => 'controls',
                 'layout' => 'responsive',
             ]
+        ],
+
+        // Individual provider options that override fetched data.
+        'providers' => [
+            'YouTube' => [
+                'data' => [
+                    'width' => 560,
+                    'height' => 315,
+                ],
+                'html' => [
+                    'width' => 560,
+                    'height' => 315,
+                ]
+            ],
         ]
     ],
 

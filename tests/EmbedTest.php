@@ -2,6 +2,7 @@
 
 use Cohensive\OEmbed\Embed;
 use Cohensive\OEmbed\Exceptions\HtmlParsingException;
+use Cohensive\OEmbed\Factory;
 use Cohensive\OEmbed\HtmlBuilder;
 use Cohensive\OEmbed\OEmbed;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +33,7 @@ class EmbedTest extends TestCase {
 
     public function setUp(): void
     {
-        $this->embed = (new OEmbed())->hydrate($this->data);
+        $this->embed = (new Factory())->make()->hydrate($this->data);
     }
 
     public function testHtmlParsingError()
@@ -88,5 +89,11 @@ class EmbedTest extends TestCase {
         $this->assertInstanceOf(HtmlBuilder::class, $this->embed->htmlBuilder());
         $this->assertEquals('iframe', $this->embed->htmlBuilder()->type());
         $this->assertEquals('iframe', $this->embed->htmlType());
+    }
+
+    public function testEmbedDimensions()
+    {
+        $this->assertEquals(560, $this->embed->width());
+        $this->assertEquals(315, $this->embed->height());
     }
 }

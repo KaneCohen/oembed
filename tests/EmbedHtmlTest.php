@@ -38,10 +38,10 @@ class HtmlBuilderTest extends TestCase {
         $iframe = '<iframe width="200" height="113" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
         $this->assertEquals($iframe, $this->html->html());
 
-        $iframe = '<iframe width="300" height="169" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+        $iframe = '<iframe width="300" height="170" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
         $this->assertEquals($iframe, $this->html->html(['width' => 300]));
 
-        $iframe = '<amp-iframe width="300" height="169" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></amp-iframe>';
+        $iframe = '<amp-iframe width="300" height="170" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></amp-iframe>';
         $this->assertEquals($iframe, $this->html->html(['width' => 300], true));
         $this->assertEquals($iframe, $this->html->ampHtml(['width' => 300]));
 

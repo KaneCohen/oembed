@@ -56,15 +56,17 @@ class Embed
         $this->options = $options;
         $this->amp = $amp;
 
-        $this->initData($data);
+        $this->initData();
     }
 
     /**
      * Initializer for the Embed object filling thumbnail, html and type based
      * on a given media provider data.
      */
-    public function initData(array $data): self
+    public function initData(): self
     {
+        $data = $this->data();
+
         if (isset($data['thumbnail_url'])) {
             $this->thumbnail = [
                 'url' => $data['thumbnail_url'],
@@ -97,6 +99,30 @@ class Embed
     {
         $this->options = $options;
         return $this;
+    }
+
+    /**
+     * Returns provider-specific data options.
+    */
+    public function getProviderOptions(): array
+    {
+        if (isset($this->options['providers'])) {
+            return $this->options['providers'][$this->data['provider_name']]['data'] ?? [];
+        }
+
+        return [];
+    }
+
+    /**
+     * Returns provider-specific HTML options.
+    */
+    public function getProviderHtmlOptions(): array
+    {
+        if (isset($this->options['providers'])) {
+            return $this->options['providers'][$this->data['provider_name']]['html'] ?? [];
+        }
+
+        return [];
     }
 
     /**
@@ -176,11 +202,13 @@ class Embed
     }
 
     /**
-     * Returns media provider data.
+     * Returns media provider data with applied options if set.
      */
     public function data(): array
     {
-        return $this->data;
+        $data = array_merge($this->data, $this->getProviderOptions());
+
+        return $data;
     }
 
     /**
@@ -188,7 +216,7 @@ class Embed
      */
     public function width(): int
     {
-        return $this->data['width'] ?? 0;
+        return $this->data()['width'] ?? 0;
     }
 
     /**
@@ -196,7 +224,7 @@ class Embed
      */
     public function height(): int
     {
-        return $this->data['height'] ?? 0;
+        return $this->data()['height'] ?? 0;
     }
 
     /**
@@ -204,8 +232,8 @@ class Embed
      */
     public function ratio(): float
     {
-        if (isset($this->data['width']) && isset($this->data['height'])) {
-            return $this->data['width'] / $this->data['height'];
+        if (isset($this->data()['width']) && isset($this->data()['height'])) {
+            return $this->data()['width'] / $this->data()['height'];
         }
 
         return 0;
@@ -307,6 +335,8 @@ class Embed
             foreach ($body->firstChild->attributes as $attribute) {
                 $attrs[$attribute->name] = $attribute->value;
             }
+
+            $attrs = array_merge($attrs, $this->getProviderHtmlOptions());
 
             return new HtmlBuilder(HtmlBuilder::TYPE_IFRAME, $attrs, $script);
         }

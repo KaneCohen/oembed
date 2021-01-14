@@ -50,7 +50,7 @@ class OEmbed
             return null;
         }
 
-        $embed->setOptions($this->options)->setAmp($this->amp);
+        $embed->setOptions($this->options)->setAmp($this->amp)->initData();
 
         return $embed;
     }

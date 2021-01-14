@@ -68,10 +68,9 @@ class OEmbedTest extends TestCase {
         $data = $embed->data();
         $ratio = $data['width'] / $data['height'];
         $width = 1000;
-        $height = (int) $width / $ratio;
+        $height = round($width / $ratio);
 
-        // Default width/height is 200/113 as returned by OEmbed.
-        $this->assertEquals('<iframe width="200" height="113" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html());
+        $this->assertEquals('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html());
         $this->assertEquals('<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['width' => $width]));
 
         $width = 2000;

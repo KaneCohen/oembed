@@ -143,13 +143,13 @@ class HtmlBuilder
             if ($width) {
                 $attrs['width'] = $width;
             } else {
-                $attrs['width'] = (int) ($attrs['height'] * $ratio);
+                $attrs['width'] = round($attrs['height'] * $ratio);
             }
 
             if ($height) {
                 $attrs['height'] = $height;
             } else {
-                $attrs['height'] = (int) ($attrs['width'] / $ratio);
+                $attrs['height'] = round($attrs['width'] / $ratio);
             }
         }
 
