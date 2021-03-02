@@ -1,12 +1,20 @@
 <?php
 namespace Cohensive\OEmbed;
 
+use Cohensive\OEmbed\Exceptions\ExtractorException;
+use Exception;
+
 class OEmbed
 {
     /**
      * AMP mode.
      */
     protected bool $amp = false;
+
+    /**
+     * Ignore possible exceptions occuring during OEmbed provider http requests.
+     */
+    protected bool $ignoreHttpErrors = true;
 
     /**
      * Options to apply to extracted embed objects.
@@ -44,7 +52,14 @@ class OEmbed
             return null;
         }
 
-        $embed = $extractor->fetch();
+        try {
+            $embed = $extractor->fetch();
+        } catch (Exception $e) {
+            if ($this->ignoreHttpErrors) {
+                return null;
+            }
+            throw new ExtractorException($e->getMessage());
+        }
 
         if (!$embed) {
             return null;
@@ -61,6 +76,7 @@ class OEmbed
     public function setConfig(array $config): self
     {
         $this->amp = $config['amp'] ?? false;
+        $this->ignoreHttpErrors = $config['ignoreHttpErrors'] ?? true;
         $this->options = $config['options'] ?? [];
         $this->oembedProviders = $config['oembedProviders'] ?? [];
         $this->regexProviders = $config['regexProviders'] ?? [];

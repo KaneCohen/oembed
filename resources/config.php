@@ -12,6 +12,11 @@ return [
      */
     'amp' => false,
 
+    // When set, will ignore exceptions that might occur during HTTP requests
+    // to oembed providers.
+    'ignoreHttpErrors' => true,
+
+
     /**
      *--------------------------------------------------------------------------
      * Embed Options
