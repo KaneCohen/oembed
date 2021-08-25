@@ -56,7 +56,7 @@ class OEmbedTest extends TestCase {
         $this->assertTrue(is_array($data));
         $this->assertEquals(Embed::TYPE_OEMBED, $embed->type());
         $this->assertEquals('video', $embed->mediaType());
-        $this->assertEquals('Rick Astley - Never Gonna Give You Up (Video)', $data['title']);
+        $this->assertEquals('Rick Astley - Never Gonna Give You Up (Official Music Video)', $data['title']);
         $this->assertEquals($url, $embed->url());
     }
 

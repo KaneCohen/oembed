@@ -21,6 +21,11 @@ class Embed
     protected array $options;
 
     /**
+     * AMP flag.
+     */
+    protected bool $amp;
+
+    /**
      * Original media URL.
      */
     protected string $url;
@@ -318,6 +323,10 @@ class Embed
         $doc = new DOMDocument();
         $doc->loadHTML("<html><body>$html</body></html>", LIBXML_NOERROR);
         $body = $doc->documentElement->lastChild;
+
+        if (!$body) {
+            throw new HtmlParsingException();
+        }
 
         $scripts = $body->getElementsByTagName('script');
         foreach ($scripts as $node) {
