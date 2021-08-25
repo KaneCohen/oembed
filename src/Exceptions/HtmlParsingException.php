@@ -3,5 +3,6 @@ namespace Cohensive\OEmbed\Exceptions;
 
 use Exception;
 
-class HtmlParsingException extends Exception {
+class HtmlParsingException extends Exception
+{
 }
