@@ -24,7 +24,7 @@ class OEmbedExtractor extends Extractor
     {
         $response = $this->client->request(
             'GET',
-            $this->provider,
+            (string) $this->provider,
             [
                 'query' => [
                     'url' => $this->url

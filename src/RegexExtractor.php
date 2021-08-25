@@ -10,10 +10,16 @@ class RegexExtractor extends Extractor
     {
         $data = $this->provider['data'];
 
+        $matches = null;
+
         foreach ($this->provider['urls'] as $pattern) {
             if (preg_match($pattern, $this->url, $matches)) {
                 break;
             }
+        }
+
+        if (!$matches) {
+            return null;
         }
 
         $protocol = $this->getProtocol();
@@ -42,13 +48,15 @@ class RegexExtractor extends Extractor
      */
     protected function hydrateProvider(array &$data, array $matches, string $protocol): array
     {
+        $matchCount = count($matches);
+
         // Check if we have an iframe creation array.
         foreach ($data as $key => $val) {
             if (is_array($val)) {
                 $data[$key] = $this->hydrateProvider($val, $matches, $protocol);
             } else {
                 $data[$key] = str_replace('{protocol}', $protocol, $data[$key]);
-                for ($i = 1; $i < count($matches); $i++) {
+                for ($i = 1; $i < $matchCount; $i++) {
                     $data[$key] = str_replace('{' . $i . '}', $matches[$i], $data[$key]);
                 }
             }

@@ -324,21 +324,16 @@ class Embed
         $doc->loadHTML("<html><body>$html</body></html>", LIBXML_NOERROR);
         $body = $doc->documentElement->lastChild;
 
-        if (!$body) {
+        if (!$body || ($body && !$body->firstChild)) {
             throw new HtmlParsingException();
         }
 
-        $scripts = $body->getElementsByTagName('script');
-        foreach ($scripts as $node) {
+        foreach ($body->getElementsByTagName('script') as $node) {
             $script = $node->getAttribute('src');
             break;
         }
 
-        if (!$body->firstChild) {
-            throw new HtmlParsingException();
-        }
-
-        if ($body->firstChild && $body->firstChild->nodeName === 'iframe') {
+        if ($body->firstChild->nodeName === 'iframe') {
             $attrs = [];
 
             foreach ($body->firstChild->attributes as $attribute) {

@@ -37,6 +37,8 @@ class HtmlBuilder
             if ($this->type === self::TYPE_VIDEO) {
                 return $this->video($attrs, $amp);
             }
+
+            return '';
         } else {
             return $this->html;
         }
