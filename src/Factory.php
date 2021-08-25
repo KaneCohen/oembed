@@ -29,7 +29,7 @@ class Factory
     /**
      * Helper method to quickly get embed data from OEmbed instance.
      */
-    public function get(string $url, array $options = []): ?Extractor
+    public function get(string $url, array $options = []): ?Embed
     {
         return $this->make()->withOptions($options)->get($url);
     }

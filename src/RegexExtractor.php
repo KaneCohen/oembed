@@ -11,7 +11,9 @@ class RegexExtractor extends Extractor
         $data = $this->provider['data'];
 
         foreach ($this->provider['urls'] as $pattern) {
-            preg_match($pattern, $this->url, $matches);
+            if (preg_match($pattern, $this->url, $matches)) {
+                break;
+            }
         }
 
         $protocol = $this->getProtocol();

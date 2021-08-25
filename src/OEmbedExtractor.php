@@ -10,7 +10,7 @@ class OEmbedExtractor extends Extractor
 
     protected HttpClientInterface $client;
 
-    public function __construct(string|array $provider, string $url)
+    public function __construct(string $provider, string $url)
     {
         $this->provider = $provider;
         $this->url = $url;
@@ -22,9 +22,12 @@ class OEmbedExtractor extends Extractor
      */
     public function fetch(): ?Embed
     {
-        $response = $this->client->request('GET', $this->provider, [
-            'query' => [
-                'url' => $this->url
+        $response = $this->client->request(
+            'GET',
+            $this->provider,
+            [
+                'query' => [
+                    'url' => $this->url
             ]
         ]);
 
