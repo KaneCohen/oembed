@@ -108,7 +108,7 @@ class Embed
 
     /**
      * Returns provider-specific data options.
-    */
+     */
     public function getProviderOptions(): array
     {
         if (isset($this->options['providers'])) {
@@ -120,7 +120,7 @@ class Embed
 
     /**
      * Returns provider-specific HTML options.
-    */
+     */
     public function getProviderHtmlOptions(): array
     {
         if (isset($this->options['providers'])) {
