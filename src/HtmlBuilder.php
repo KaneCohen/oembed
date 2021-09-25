@@ -53,6 +53,31 @@ class HtmlBuilder
     }
 
     /**
+     * Returns URL for a given media provider embed. Returned url type depends on embed type:
+     * iframe - string
+     * video - string[]
+     * raw - null
+     */
+    public function src(array $options = []): string | array | null
+    {
+        if (is_array($this->html)) {
+            $attrs = $this->applyOptions($this->html, $options);
+
+            if ($this->type === self::TYPE_IFRAME) {
+                return $attrs['src'] ?? null;
+            }
+
+            if ($this->type === self::TYPE_VIDEO) {
+                return array_map(function ($source) {
+                    return $source['src'];
+                }, $attrs['source']);
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Constructs <iframe> HTML-element based on array of provider attributes.
      */
     protected function iframe(array $attrs, bool $amp = false): string
@@ -155,9 +180,28 @@ class HtmlBuilder
             }
         }
 
+        if (isset($options['autoplay']) && $options['autoplay']) {
+            $attrs['autoplay'] = $options['autoplay'];
+
+            // We can remove autoplay option if type is "iframe" after we change "src" attribute.
+            if ($this->type === self::TYPE_IFRAME) {
+                $attrs['src'] = $this->addUrlParam($attrs['src'], sprintf('%s=%s', 'autoplay', $attrs['autoplay']));
+                unset($attrs['autoplay']);
+            }
+        }
+
         $typeOptions = $this->getTypeOptions($options);
         $attrs = array_merge($attrs, $typeOptions);
 
         return $attrs;
+    }
+
+    /**
+     * Append custom parameter to the end of the url.
+     */
+    protected function addUrlParam(string $url, string $param): string
+    {
+        $operator = strpos($url, '?') >= 0 ? '&' : '?';
+        return $url . $operator . $param;
     }
 }

@@ -5,8 +5,8 @@ use Cohensive\OEmbed\HtmlBuilder;
 use Cohensive\OEmbed\OEmbed;
 use PHPUnit\Framework\TestCase;
 
-class HtmlBuilderTest extends TestCase {
-
+class HtmlBuilderTest extends TestCase
+{
     protected $oembed;
 
     protected $attrs = [

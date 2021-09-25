@@ -17,7 +17,7 @@ Add following require to your `composer.json` file:
 ~~~
 "cohensive/oembed": "dev-master"
 // or
-"cohensive/oembed": "0.9"
+"cohensive/oembed": "0.10"
 ~~~
 
 Then run `composer install` or `composer update` to download it and autoload.
@@ -59,6 +59,10 @@ if ($embed) {
 
 	// Checks if embed data contains details on thumbnail.
 	$embed->hasThumbnail();
+
+	// Returns embed "src" - URL string / array of strings / null for current embed.
+	// Accepts same options as "html" method.
+	$embed->src();
 
 	// Returns an array containing thumbnail details: url, width and height.
 	$embed->thumbnail();

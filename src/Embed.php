@@ -153,11 +153,7 @@ class Embed
      */
     public function html(array $options = null, ?bool $amp = null): string
     {
-        if (is_null($options)) {
-            $options = $this->options;
-        } else {
-            $options = array_merge($this->options, $options);
-        }
+        $options = array_merge($this->options, $options ?? []);
 
         if (is_null($amp)) {
             $amp = $this->amp;
@@ -172,6 +168,16 @@ class Embed
     public function ampHtml(array $options = null): string
     {
         return $this->html($options, true);
+    }
+
+    /**
+     * Returns URL of a resulting embed object.
+     */
+    public function src(array $options = null): string | array | null
+    {
+        $options = array_merge($this->options, $options ?? []);
+
+        return $this->html->src($options);
     }
 
     /**

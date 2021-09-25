@@ -7,9 +7,9 @@ use Cohensive\OEmbed\HtmlBuilder;
 use Cohensive\OEmbed\OEmbed;
 use PHPUnit\Framework\TestCase;
 
-class EmbedTest extends TestCase {
-
-    protected $oembed;
+class EmbedTest extends TestCase
+{
+    protected OEmbed $oembed;
 
     protected $data = [
         'type' => Embed::TYPE_OEMBED,

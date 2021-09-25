@@ -28,8 +28,9 @@ class OEmbedExtractor extends Extractor
             [
                 'query' => [
                     'url' => $this->url
+                ]
             ]
-        ]);
+        );
 
         if ($response->getStatusCode() !== self::SUCCESS) {
             return null;
