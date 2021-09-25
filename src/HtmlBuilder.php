@@ -58,7 +58,7 @@ class HtmlBuilder
      * video - string[]
      * raw - null
      */
-    public function src(array $options = []): string | array | null
+    public function src(array $options = []): mixed
     {
         if (is_array($this->html)) {
             $attrs = $this->applyOptions($this->html, $options);

@@ -173,7 +173,7 @@ class Embed
     /**
      * Returns URL of a resulting embed object.
      */
-    public function src(array $options = null): string | array | null
+    public function src(array $options = null): mixed
     {
         $options = array_merge($this->options, $options ?? []);
 
