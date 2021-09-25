@@ -166,19 +166,11 @@ class HtmlBuilder
 
         if (isset($attrs['width']) && isset($attrs['height'])) {
             $ratio = $attrs['width'] / $attrs['height'];
-
-            if ($width) {
-                $attrs['width'] = $width;
-            } else {
-                $attrs['width'] = round($attrs['height'] * $ratio);
-            }
-
-            if ($height) {
-                $attrs['height'] = $height;
-            } else {
-                $attrs['height'] = round($attrs['width'] / $ratio);
-            }
+            $attrs['width'] = $width ?: round($attrs['height'] * $ratio);
+            $attrs['height'] = $height ?: round($attrs['width'] / $ratio);
         }
+
+        $typeOptions = $this->getTypeOptions($options);
 
         if (isset($options['autoplay']) && $options['autoplay']) {
             $attrs['autoplay'] = $options['autoplay'];
@@ -190,10 +182,7 @@ class HtmlBuilder
             }
         }
 
-        $typeOptions = $this->getTypeOptions($options);
-        $attrs = array_merge($attrs, $typeOptions);
-
-        return $attrs;
+        return array_merge($attrs, $typeOptions);
     }
 
     /**
