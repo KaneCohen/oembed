@@ -1,30 +1,20 @@
 <?php namespace Cohensive\OEmbed;
 
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class OEmbedServiceProvider extends ServiceProvider
+class OEmbedServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     */
-    protected bool $defer = true;
-
     /**
      * Boots the service provider.
      */
     public function boot(): void
     {
-        $source = __DIR__ . '/../resources/config.php';
-
-        if (function_exists('config_path')) {
+        if ($this->app->runningInConsole()) {
             $this->publishes([
-                $source => config_path('oembed.php'),
+                __DIR__ . '/../resources/config.php' => $this->app->configPath('oembed.php'),
             ], 'config');
         }
-
-        $this->mergeConfigFrom(
-            $source, 'oembed'
-        );
     }
 
     /**
@@ -32,7 +22,9 @@ class OEmbedServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('oembed', function($app) {
+        $this->registerConfig();
+
+        $this->app->singleton('oembed', function ($app) {
             return new OEmbed($app['config']['oembed']);
         });
 
@@ -41,6 +33,11 @@ class OEmbedServiceProvider extends ServiceProvider
 
     public function provides(): array
     {
-        return ['oembed'];
+        return [OEmbed::class];
+    }
+
+    private function registerConfig(): void
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../resources/config.php', 'oembed');
     }
 }
