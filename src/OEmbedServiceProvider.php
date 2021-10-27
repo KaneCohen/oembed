@@ -33,7 +33,7 @@ class OEmbedServiceProvider extends ServiceProvider implements DeferrableProvide
 
     public function provides(): array
     {
-        return [OEmbed::class];
+        return [OEmbed::class, 'oembed'];
     }
 
     private function registerConfig(): void
