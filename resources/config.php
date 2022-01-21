@@ -1754,7 +1754,7 @@ return [
         'twitch' => [
             'ssl' => true,
             'urls' => [
-                '~^(https?://)?(?:www\.)?twitch\.tv/([0-9a-zA-Z-_]+)$~imu'
+                '~^https?://(?:www\.)?twitch\.tv/([0-9a-zA-Z-_]+)$~imu'
             ],
             'data' => [
                 'type' => 'video',
@@ -1777,7 +1777,7 @@ return [
         'twitchVideo' => [
             'ssl' => true,
             'urls' => [
-                '~^(https?://)?(?:www\.)?twitch\.tv/videos/(\d+)$~imu'
+                '~^https?://(?:www\.)?twitch\.tv/videos/(\d+)$~imu'
             ],
             'data' => [
                 'type' => 'video',
@@ -1802,8 +1802,8 @@ return [
         'twitchClip' => [
             'ssl' => true,
             'urls' => [
-                '~^(https?://)?clips.twitch\.tv/([a-zA-Z0-9-_]+)$~imu',
-                '~^(https?://)?(?:www\.)?twitch\.tv/(?:[0-9a-zA-Z-_]+)/clip/([0-9a-zA-Z-_]+)~imu',
+                '~^https?://clips.twitch\.tv/([a-zA-Z0-9-_]+)$~imu',
+                '~^https?://(?:www\.)?twitch\.tv/(?:[0-9a-zA-Z-_]+)/clip/([0-9a-zA-Z-_]+)~imu',
             ],
             'data' => [
                 'type' => 'video',
