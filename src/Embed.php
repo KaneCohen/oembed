@@ -225,7 +225,7 @@ class Embed
     /**
      * Returns width of the embed. 0 if not set.
      */
-    public function width(): int
+    public function width(): int|string
     {
         return $this->data()['width'] ?? 0;
     }
@@ -233,7 +233,7 @@ class Embed
     /**
      * Returns height of the embed. 0 if not set.
      */
-    public function height(): int
+    public function height(): int|string
     {
         return $this->data()['height'] ?? 0;
     }
@@ -244,7 +244,7 @@ class Embed
     public function ratio(): float
     {
         if (isset($this->data()['width']) && isset($this->data()['height'])) {
-            return $this->data()['width'] / $this->data()['height'];
+            return (int) $this->data()['width'] / (int) $this->data()['height'];
         }
 
         return 0;
@@ -287,7 +287,7 @@ class Embed
     /**
      * Return thumbnail width or 0 if not set.
      */
-    public function thumbnailWidth(): int
+    public function thumbnailWidth(): int|string
     {
         return $this->hasThumbnail() ? $this->thumbnail['width'] : 0;
     }
@@ -295,7 +295,7 @@ class Embed
     /**
      * Return thumbnail height or 0 if not set.
      */
-    public function thumbnailHeight(): int
+    public function thumbnailHeight(): int|string
     {
         return $this->hasThumbnail() ? $this->thumbnail['height'] : 0;
     }

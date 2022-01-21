@@ -6,7 +6,7 @@ class RegexExtractor extends Extractor
     /**
      * Fetches data from provider.
      */
-    public function fetch(): ?Embed
+    public function fetch(array $parameters = []): ?Embed
     {
         $data = $this->provider['data'];
 

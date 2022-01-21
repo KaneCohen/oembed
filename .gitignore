@@ -1,3 +1,5 @@
 /vendor
 composer.lock
+providers.txt
+simple_providers.txt
 .DS_Store

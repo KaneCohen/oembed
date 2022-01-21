@@ -44,7 +44,7 @@ class OEmbed
     /**
      * Parse URL and attempt to fetch embed data
      */
-    public function get(string $url): ?Embed
+    public function get(string $url, array $parameters = []): ?Embed
     {
         $extractor = $this->getExtractor($url);
 
@@ -53,7 +53,7 @@ class OEmbed
         }
 
         try {
-            $embed = $extractor->fetch();
+            $embed = $extractor->fetch($parameters);
         } catch (Exception $e) {
             if ($this->ignoreHttpErrors) {
                 return null;
@@ -129,8 +129,14 @@ class OEmbed
     protected function getExtractor(string $url): ?Extractor
     {
         foreach ($this->oembedProviders as $endpoint => $provider) {
-            if ($this->findProviderMatch($url, $provider)) {
-                return new OEmbedExtractor($endpoint, $url);
+            if (isset($provider['schemes'])) {
+                if ($this->findProviderMatch($url, $provider['schemes'])) {
+                    return new OEmbedExtractor($endpoint, $url, $provider['parameters'] ?? []);
+                }
+            } else {
+                if ($this->findProviderMatch($url, $provider)) {
+                    return new OEmbedExtractor($endpoint, $url);
+                }
             }
         }
 

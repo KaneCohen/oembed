@@ -10,25 +10,26 @@ class OEmbedExtractor extends Extractor
 
     protected HttpClientInterface $client;
 
-    public function __construct(string $provider, string $url)
+    public function __construct(string $provider, string $url, array $parameters = [])
     {
         $this->provider = $provider;
         $this->url = $url;
+        $this->parameters = $parameters;
         $this->client = HttpClient::create();
     }
 
     /**
      * Fetches OEmbed data from provider.
      */
-    public function fetch(): ?Embed
+    public function fetch(array $parameters = []): ?Embed
     {
+        $query = array_merge($parameters ?: $this->parameters, ['url' => $this->url]);
+
         $response = $this->client->request(
             'GET',
             (string) $this->provider,
             [
-                'query' => [
-                    'url' => $this->url
-                ]
+                'query' => $query
             ]
         );
 

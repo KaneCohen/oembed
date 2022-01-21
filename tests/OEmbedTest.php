@@ -184,4 +184,19 @@ class OEmbedTest extends TestCase
         $this->assertEquals($html, $embed->html());
         $this->assertEquals($script, $embed->script());
     }
+
+    public function testOEmbedParameters()
+    {
+        $url = 'https://twitter.com/hunter11_wolf/status/1484450337247404034';
+        $embed = $this->oembed->get($url, ['theme' => 'dark']);
+        $html = '<blockquote class="twitter-tweet" data-theme="dark"><p lang="und" dir="ltr"> <a href="https://t.co/EKXsyw0IdU">pic.twitter.com/EKXsyw0IdU</a></p>&mdash; Paintheon, Lord of Shitposting (@hunter11_wolf) <a href="https://twitter.com/hunter11_wolf/status/1484450337247404034?ref_src=twsrc%5Etfw">January 21, 2022</a></blockquote>'. "\n" . '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>' . "\n";
+
+        $this->assertEquals($html, $embed->html());
+
+        $url = 'https://twitter.com/hunter11_wolf/status/1484450337247404034';
+        $embed = $this->oembed->get($url, ['theme' => 'light']);
+        $html = '<blockquote class="twitter-tweet" data-theme="light"><p lang="und" dir="ltr"> <a href="https://t.co/EKXsyw0IdU">pic.twitter.com/EKXsyw0IdU</a></p>&mdash; Paintheon, Lord of Shitposting (@hunter11_wolf) <a href="https://twitter.com/hunter11_wolf/status/1484450337247404034?ref_src=twsrc%5Etfw">January 21, 2022</a></blockquote>'. "\n" . '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>' . "\n";
+
+        $this->assertEquals($html, $embed->html());
+    }
 }
