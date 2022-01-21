@@ -86,12 +86,12 @@ class OEmbedTest extends TestCase
         $width = 1000;
         $height = round($width / $ratio);
 
-        $this->assertEquals('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html());
-        $this->assertEquals('<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['width' => $width]));
+        $this->assertEquals('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html());
+        $this->assertEquals('<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['width' => $width]));
 
         $width = 2000;
         $height = $width / $ratio;
-        $this->assertEquals('<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['width' => $width]));
+        $this->assertEquals('<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['width' => $width]));
     }
 
     public function testYouTubeHtmlAutoplay()
@@ -99,7 +99,7 @@ class OEmbedTest extends TestCase
         $url = 'http://youtu.be/dQw4w9WgXcQ';
         $embed = $this->oembed->get($url);
 
-        $this->assertEquals('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed&autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['autoplay' => true]));
+        $this->assertEquals('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed&autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['autoplay' => true]));
     }
 
     public function testOEmbedProviderFails()
