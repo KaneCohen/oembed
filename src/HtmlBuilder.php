@@ -25,10 +25,10 @@ class HtmlBuilder
     /**
      * Returns HTML code for media provider.
      */
-    public function html(array $options = [], bool $amp = false): string
+    public function html(array $options = [], array $globalOptions = [], bool $amp = false): string
     {
         if (is_array($this->html)) {
-            $attrs = $this->applyOptions($this->html, $options);
+            $attrs = $this->applyOptions($this->html, $options, $globalOptions);
 
             if ($this->type === self::TYPE_IFRAME) {
                 return $this->iframe($attrs, $amp);
@@ -47,9 +47,9 @@ class HtmlBuilder
     /**
      * Return AMP-friendly HTML for media provider.
      */
-    public function ampHtml(array $options = []): string
+    public function ampHtml(array $options = [], array $globalOptions = []): string
     {
-        return $this->html($options, true);
+        return $this->html($options, $globalOptions, true);
     }
 
     /**
@@ -58,10 +58,10 @@ class HtmlBuilder
      * video - string[]
      * raw - null
      */
-    public function src(array $options = []): mixed
+    public function src(array $options = [], array $globalOptions = []): mixed
     {
         if (is_array($this->html)) {
-            $attrs = $this->applyOptions($this->html, $options);
+            $attrs = $this->applyOptions($this->html, $options, $globalOptions);
 
             if ($this->type === self::TYPE_IFRAME) {
                 return $attrs['src'] ?? null;
@@ -159,30 +159,37 @@ class HtmlBuilder
     /**
      * Merge and apply local and global options to the provider attributes.
      */
-    protected function applyOptions(array $attrs, array $options): array
+    protected function applyOptions(array $attrs, array $options, array $globalOptions): array
     {
+        $options = array_merge($globalOptions['attributes'] ?? [], $options);
         $width = $options['width'] ?? null;
         $height = $options['height'] ?? null;
 
         if (isset($attrs['width']) && isset($attrs['height'])) {
             $ratio = $attrs['width'] / $attrs['height'];
-            $attrs['width'] = $width ?: round($attrs['height'] * $ratio);
+            $attrs['width'] = $width ?: round(($height ?: $attrs['height']) * $ratio);
             $attrs['height'] = $height ?: round($attrs['width'] / $ratio);
         }
 
-        $typeOptions = $this->getTypeOptions($options);
+        $typeOptions = $this->getTypeOptions($globalOptions);
 
-        if (isset($options['autoplay']) && $options['autoplay']) {
+        if ($options['autoplay'] ?? false) {
             $attrs['autoplay'] = $options['autoplay'];
 
             // We can remove autoplay option if type is "iframe" after we change "src" attribute.
             if ($this->type === self::TYPE_IFRAME) {
                 $attrs['src'] = $this->addUrlParam($attrs['src'], sprintf('%s=%s', 'autoplay', $attrs['autoplay']));
+                unset($options['autoplay']);
                 unset($attrs['autoplay']);
             }
         }
 
-        return array_merge($attrs, $typeOptions);
+        return array_filter(
+            array_merge($typeOptions, $options, $attrs),
+            function ($v) {
+                return $v !== null;
+            }
+        );
     }
 
     /**

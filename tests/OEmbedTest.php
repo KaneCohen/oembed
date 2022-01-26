@@ -86,12 +86,12 @@ class OEmbedTest extends TestCase
         $width = 1000;
         $height = round($width / $ratio);
 
-        $this->assertEquals('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html());
-        $this->assertEquals('<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['width' => $width]));
+        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>', $embed->html());
+        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>', $embed->html(['width' => $width]));
 
         $width = 2000;
         $height = $width / $ratio;
-        $this->assertEquals('<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['width' => $width]));
+        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>', $embed->html(['width' => $width]));
     }
 
     public function testYouTubeHtmlAutoplay()
@@ -99,7 +99,7 @@ class OEmbedTest extends TestCase
         $url = 'http://youtu.be/dQw4w9WgXcQ';
         $embed = $this->oembed->get($url);
 
-        $this->assertEquals('<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed&autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive"></iframe>', $embed->html(['autoplay' => true]));
+        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed&autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>', $embed->html(['autoplay' => true]));
     }
 
     public function testOEmbedProviderFails()
@@ -154,8 +154,8 @@ class OEmbedTest extends TestCase
     {
         $url = 'https://example.com/hello.mp4';
         $embed = $this->oembed->get($url);
-        $html = '<video controls="controls" layout="responsive"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></video>';
-        $ampHtml = '<amp-video controls="controls" layout="responsive"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></amp-video>';
+        $html = '<video controls="controls" layout="responsive" width="600" height="339"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></video>';
+        $ampHtml = '<amp-video controls="controls" layout="responsive" width="600" height="339"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></amp-video>';
 
         $this->assertTrue(is_string($embed->html()));
         $this->assertEquals($html, $embed->html());
@@ -166,8 +166,8 @@ class OEmbedTest extends TestCase
     {
         $url = 'https://example.com/hello.mp4';
         $embed = $this->oembed->get($url);
-        $html = '<video autoplay="autoplay" controls="controls" layout="responsive"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></video>';
-        $ampHtml = '<amp-video autoplay="autoplay" controls="controls" layout="responsive"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></amp-video>';
+        $html = '<video controls="controls" layout="responsive" width="600" height="339" autoplay="autoplay"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></video>';
+        $ampHtml = '<amp-video controls="controls" layout="responsive" width="600" height="339" autoplay="autoplay"><source src="https://example.com/hello.webm" type="video/webm"><source src="https://example.com/hello.ogg" type="video/ogg"><source src="https://example.com/hello.mp4" type="video/mp4"></amp-video>';
 
         $this->assertTrue(is_string($embed->html()));
         $this->assertEquals($html, $embed->html(['autoplay' => 'autoplay']));

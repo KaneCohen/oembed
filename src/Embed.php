@@ -151,21 +151,19 @@ class Embed
      * Returns string with HTML to embed in application. Will return AMP-friendly
      * HTML if global amp mode is enabled and not overwitten.
      */
-    public function html(array $options = null, ?bool $amp = null): string
+    public function html(array $options = [], ?bool $amp = null): string
     {
-        $options = array_merge($this->options, $options ?? []);
-
         if (is_null($amp)) {
             $amp = $this->amp;
         }
 
-        return $this->html->html($options, $amp);
+        return $this->html->html($options, $this->options, $amp);
     }
 
     /**
      * Returns string with AMP-friendly HTML to embed in an application.
      */
-    public function ampHtml(array $options = null): string
+    public function ampHtml(array $options = []): string
     {
         return $this->html($options, true);
     }
@@ -173,11 +171,11 @@ class Embed
     /**
      * Returns URL of a resulting embed object.
      */
-    public function src(array $options = null): mixed
+    public function src(array $options = []): mixed
     {
         $options = array_merge($this->options, $options ?? []);
 
-        return $this->html->src($options);
+        return $this->html->src($options, $this->options);
     }
 
     /**

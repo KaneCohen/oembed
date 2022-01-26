@@ -32,13 +32,16 @@ return [
      *
      */
     'options' => [
-        // Sets global embed width where applicable. If set to null - will be
-        // automatically calculated if global height is set.
-        'width' => null,
+        // Attributes which will be assigned to generated html.
+        'attributes' => [
+            // Sets global embed width where applicable. If set to null - will be
+            // automatically calculated if global height is set.
+            'width' => null,
 
-        // Sets global embed height where applicable. If set to null - will be
-        // automatically calculated if global width is set.
-        'height' => null,
+            // Sets global embed height where applicable. If set to null - will be
+            // automatically calculated if global width is set.
+            'height' => null,
+        ],
 
         // Sets global embed html attributes.
         'html' => [
@@ -1703,10 +1706,10 @@ return [
                 'type' => 'video',
                 'provider_name' => 'LiveLeak',
                 'provider_url' => 'https://www.liveleak.com',
-                'width' => 640,
-                'height' => 360,
                 'html' => [
                     'iframe' => [
+                        'width' => 640,
+                        'height' => 360,
                         'src' => '{protocol}://liveleak.com/e/{1}',
                     ],
                 ],
@@ -1722,10 +1725,10 @@ return [
                 'type' => 'video',
                 'provider_name' => 'IGN',
                 'provider_url' => 'https://ign.com',
-                'width' => 560,
-                'height' => 315,
                 'html' => [
                     'iframe' => [
+                        'width' => 560,
+                        'height' => 315,
                         'src' => '{protocol}://widgets.ign.com/video/embed/content.html?url={1}',
                     ],
                 ],
@@ -1741,10 +1744,10 @@ return [
                 'type' => 'video',
                 'provider_name' => 'Vine',
                 'provider_url' => 'https://vine.co',
-                'width' => 600,
-                'height' => 600,
                 'html' => [
                     'iframe' => [
+                        'width' => 600,
+                    'height' => 600,
                         'src' => '{protocol}://vine.co/v/{1}/embed/postcard',
                     ],
                 ],
@@ -1760,10 +1763,10 @@ return [
                 'type' => 'video',
                 'provider_name' => 'Twitch',
                 'provider_url' => 'https://twitch.tv/{1}',
-                'width'  => 500,
-                'height' => 350,
                 'html' => [
                     'iframe' => [
+                        'width'  => 500,
+                        'height' => 350,
                         'src' => '{protocol}://player.twitch.tv/?channel={1}&parent=',
                         'allowfullscreen' => null,
                         'frameborder' => 0,
@@ -1783,13 +1786,11 @@ return [
                 'type' => 'video',
                 'provider_name' => 'Twitch Videos',
                 'provider_url' => 'https://twitch.tv/videos/{1}',
-                'width' => 600,
-                'height' => 365,
                 'html' => [
                     'iframe' => [
-                        'src' => '{protocol}://player.twitch.tv/?video=v{1}&autoplay=false&parent=',
                         'width' => 600,
                         'height' => 365,
+                        'src' => '{protocol}://player.twitch.tv/?video=v{1}&autoplay=false&parent=',
                         'allowfullscreen' => null,
                         'frameborder' => 0,
                         'sandbox' => 'allow-scripts allow-popups allow-same-origin allow-presentation',
@@ -1809,10 +1810,10 @@ return [
                 'type' => 'video',
                 'provider_name' => 'Twitch Clip',
                 'provider_url' => '{protocol}://clips.twitch.tv/{1}',
-                'width'  => 420,
-                'height' => 237,
                 'html' => [
                     'iframe' => [
+                        'width'  => 420,
+                        'height' => 237,
                         'src' => '{protocol}://clips.twitch.tv/embed?clip={1}&autoplay=false&tt_medium=clips_embed&parent=',
                         'scrolling' => 'no',
                         'allowfullscreen' => true,
@@ -1833,10 +1834,10 @@ return [
                 'type' => 'video',
                 'provider_name' => 'HTML5 Video',
                 'provider_url' => '{protocol}://{1}.{2}',
-                'width' => 600,
-                'height' => 339,
                 'html' => [
                     'video' => [
+                        'width' => 600,
+                        'height' => 339,
                         'source' => [
                             [
                                 'src' => '{protocol}://{1}.webm',
