@@ -111,7 +111,7 @@ class Embed
      */
     public function getProviderOptions(): array
     {
-        if (isset($this->options['providers'])) {
+        if (isset($this->options['providers']) && isset($this->data['provider_name'])) {
             return $this->options['providers'][$this->data['provider_name']]['data'] ?? [];
         }
 
@@ -123,7 +123,7 @@ class Embed
      */
     public function getProviderHtmlOptions(): array
     {
-        if (isset($this->options['providers'])) {
+        if (isset($this->options['providers']) && isset($this->data['provider_name'])) {
             return $this->options['providers'][$this->data['provider_name']]['html'] ?? [];
         }
 
