@@ -76,10 +76,10 @@ class OEmbed
     public function setConfig(array $config): self
     {
         $this->amp = $config['amp'] ?? false;
-        $this->ignoreHttpErrors = $config['ignoreHttpErrors'] ?? true;
+        $this->ignoreHttpErrors = $config['ignore_http_errors'] ?? true;
         $this->options = $config['options'] ?? [];
-        $this->oembedProviders = $config['oembedProviders'] ?? [];
-        $this->regexProviders = $config['regexProviders'] ?? [];
+        $this->oembedProviders = $config['oembed_providers'] ?? [];
+        $this->regexProviders = $config['regex_providers'] ?? [];
 
         return $this;
     }

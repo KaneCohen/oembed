@@ -21,7 +21,7 @@ return [
      * to oembed providers.
      *
      */
-    'ignoreHttpErrors' => true,
+    'ignore_http_errors' => true,
 
     /**
      *--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
      *   ],
      *
      */
-    'oembedProviders' => [
+    'oembed_providers' => [
         'http://www.23hq.com/23/oembed' => [
             'schemes' => [
                 '|^https?://www\\.23hq\\.com/.*/photo/.*$|i',
@@ -168,7 +168,7 @@ return [
                 '|^https?://app\\.archivos\\.digital/app/view/.*$|i',
             ]
         ],
-        'https://audioboom.com/publishing/oembed/v4.{format}' => [
+        'https://audioboom.com/publishing/oembed/v4.json' => [
             'schemes' => [
                 '|^https?://audioboom\\.com/channels/.*$|i',
                 '|^https?://audioboom\\.com/channel/.*$|i',
@@ -234,7 +234,7 @@ return [
                 '|^https?://cmc\\.byzart\\.eu/files/.*$|i',
             ]
         ],
-        'http://cacoo.com/oembed.{format}' => [
+        'http://cacoo.com/oembed.json' => [
             'schemes' => [
                 '|^https?://cacoo\\.com/diagrams/.*$|i',
             ]
@@ -268,7 +268,7 @@ return [
                 '|^https?://public\\.chartblocks\\.com/c/.*$|i',
             ]
         ],
-        'http://chirb.it/oembed.{format}' => [
+        'http://chirb.it/oembed.json' => [
             'schemes' => [
                 '|^https?://chirb\\.it/.*$|i',
             ]
@@ -296,7 +296,7 @@ return [
                 '|^https?://clyp\\.it/playlist/.*$|i',
             ]
         ],
-        'https://app.ilovecoco.video/api/oembed.{format}' => [
+        'https://app.ilovecoco.video/api/oembed.json' => [
             'schemes' => [
                 '|^https?://app\\.ilovecoco\\.video/.*/embed$|i',
             ]
@@ -326,7 +326,7 @@ return [
                 '|^https?://codesandbox\\.io/embed/.*$|i',
             ]
         ],
-        'http://www.collegehumor.com/oembed.{format}' => [
+        'http://www.collegehumor.com/oembed.json' => [
             'schemes' => [
                 '|^https?://www\\.collegehumor\\.com/video/.*$|i',
             ]
@@ -336,13 +336,13 @@ return [
                 '|^https?://commaful\\.com/play/.*$|i',
             ]
         ],
-        'http://coub.com/api/oembed.{format}' => [
+        'http://coub.com/api/oembed.json' => [
             'schemes' => [
                 '|^https?://coub\\.com/view/.*$|i',
                 '|^https?://coub\\.com/embed/.*$|i',
             ]
         ],
-        'http://crowdranking.com/api/oembed.{format}' => [
+        'http://crowdranking.com/api/oembed.json' => [
             'schemes' => [
                 '|^https?://crowdranking\\.com/.*/.*$|i',
             ]
@@ -659,7 +659,7 @@ return [
                 '|^https?://huffduffer\\.com/.*/.*$|i',
             ]
         ],
-        'http://www.hulu.com/api/oembed.{format}' => [
+        'http://www.hulu.com/api/oembed.json' => [
             'schemes' => [
                 '|^https?://www\\.hulu\\.com/watch/.*$|i',
             ]
@@ -888,7 +888,7 @@ return [
                 '|^https?://.*\\.medialab\\.co/share/embed/.*$|i',
             ]
         ],
-        'https://medienarchiv.zhdk.ch/oembed.{format}' => [
+        'https://medienarchiv.zhdk.ch/oembed.json' => [
             'schemes' => [
                 '|^https?://medienarchiv\\.zhdk\\.ch/entries/.*$|i',
             ]
@@ -962,7 +962,7 @@ return [
                 '|^https?://www\\.nb\\.no/items/.*$|i',
             ]
         ],
-        'https://naturalatlas.com/oembed.{format}' => [
+        'https://naturalatlas.com/oembed.json' => [
             'schemes' => [
                 '|^https?://naturalatlas\\.com/.*$|i',
                 '|^https?://naturalatlas\\.com/.*/.*$|i',
@@ -1010,7 +1010,7 @@ return [
                 '|^https?://odysee\\.com/.*$|i',
             ]
         ],
-        'http://official.fm/services/oembed.{format}' => [
+        'http://official.fm/services/oembed.json' => [
             'schemes' => [
                 '|^https?://official\\.fm/tracks/.*$|i',
                 '|^https?://official\\.fm/playlists/.*$|i',
@@ -1179,7 +1179,7 @@ return [
                 '|^https?://www\\.reverbnation\\.com/.*/songs/.*$|i',
             ]
         ],
-        'http://roomshare.jp/en/oembed.{format}' => [
+        'http://roomshare.jp/en/oembed.json' => [
             'schemes' => [
                 '|^https?://roomshare\\.jp/post/.*$|i',
                 '|^https?://roomshare\\.jp/en/post/.*$|i',
@@ -1217,12 +1217,12 @@ return [
                 '|^https?://www\\.screencast\\.com/.*$|i',
             ]
         ],
-        'http://www.screenr.com/api/oembed.{format}' => [
+        'http://www.screenr.com/api/oembed.json' => [
             'schemes' => [
                 '|^https?://www\\.screenr\\.com/.*/$|i',
             ]
         ],
-        'https://scribblemaps.com/api/services/oembed.{format}' => [
+        'https://scribblemaps.com/api/services/oembed.json' => [
             'schemes' => [
                 '|^https?://www\\.scribblemaps\\.com/maps/view/.*$|i',
                 '|^https?://www\\.scribblemaps\\.com/maps/view/.*$|i',
@@ -1251,7 +1251,7 @@ return [
                 '|^https?://shoud\\.io/.*$|i',
             ]
         ],
-        'https://api.getshow.io/oembed.{format}' => [
+        'https://api.getshow.io/oembed.json' => [
             'schemes' => [
                 '|^https?://app\\.getshow\\.io/iframe/.*$|i',
                 '|^https?://.*\\.getshow\\.io/share/.*$|i',
@@ -1343,13 +1343,13 @@ return [
                 '|^https?://.*\\.spreaker\\.com/.*$|i',
             ]
         ],
-        'http://sproutvideo.com/oembed.{format}' => [
+        'http://sproutvideo.com/oembed.json' => [
             'schemes' => [
                 '|^https?://sproutvideo\\.com/videos/.*$|i',
                 '|^https?://.*\\.vids\\.io/videos/.*$|i',
             ]
         ],
-        'https://purl.stanford.edu/embed.{format}' => [
+        'https://purl.stanford.edu/embed.json' => [
             'schemes' => [
                 '|^https?://purl\\.stanford\\.edu/.*$|i',
             ]
@@ -1395,7 +1395,7 @@ return [
                 '|^https?://share\\.synthesia\\.io/.*$|i',
             ]
         ],
-        'https://www.ted.com/services/v1/oembed.{format}' => [
+        'https://www.ted.com/services/v1/oembed.json' => [
             'schemes' => [
                 '|^https?://ted\\.com/talks/.*$|i',
                 '|^https?://ted\\.com/talks/.*$|i',
@@ -1546,7 +1546,7 @@ return [
                 '|^https?://.*\\.hubs\\.vidyard\\.com/.*$|i',
             ]
         ],
-        'https://vimeo.com/api/oembed.{format}' => [
+        'https://vimeo.com/api/oembed.json' => [
             'schemes' => [
                 '|^https?://vimeo\\.com/.*$|i',
                 '|^https?://vimeo\\.com/album/.*/video/.*$|i',
@@ -1597,14 +1597,14 @@ return [
                 '|^https?://.*\\.wiredrive\\.com/.*$|i',
             ]
         ],
-        'https://fast.wistia.com/oembed.{format}' => [
+        'https://fast.wistia.com/oembed.json' => [
             'schemes' => [
                 '|^https?://fast\\.wistia\\.com/embed/iframe/.*$|i',
                 '|^https?://fast\\.wistia\\.com/embed/playlists/.*$|i',
                 '|^https?://.*\\.wistia\\.com/medias/.*$|i',
             ]
         ],
-        'https://app.wizer.me/api/oembed.{format}' => [
+        'https://app.wizer.me/api/oembed.json' => [
             'schemes' => [
                 '|^https?://.*\\.wizer\\.me/learn/.*$|i',
                 '|^https?://.*\\.wizer\\.me/preview/.*$|i',
@@ -1695,7 +1695,7 @@ return [
      * List of media providers used to construct embed elements.
      *
      */
-    'regexProviders' => [
+    'regex_providers' => [
         'liveleak' => [
             'ssl' => true,
             'urls' => [
