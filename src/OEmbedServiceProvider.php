@@ -1,4 +1,5 @@
-<?php namespace Cohensive\OEmbed;
+<?php
+namespace Cohensive\OEmbed;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
