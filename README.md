@@ -114,3 +114,7 @@ $ php artisan vendor:publish
 ~~~
 
 If you're using OEmbed in standalone mode, you can add your own config file into Factory or OEmbed classes.
+
+### Important Changes
+
+Config format changed to use `snake_case` array keys instead of previously used `camelCase`.
