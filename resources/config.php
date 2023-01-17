@@ -1790,7 +1790,7 @@ return [
                     'iframe' => [
                         'width' => 600,
                         'height' => 365,
-                        'src' => '{protocol}://player.twitch.tv/?video=v{1}&autoplay=false&parent=',
+                        'src' => '{protocol}://player.twitch.tv/?video=v{1}&autoplay=false&parent=www.example.com',
                         'allowfullscreen' => null,
                         'frameborder' => 0,
                         'sandbox' => 'allow-scripts allow-popups allow-same-origin allow-presentation',
@@ -1814,7 +1814,7 @@ return [
                     'iframe' => [
                         'width'  => 420,
                         'height' => 237,
-                        'src' => '{protocol}://clips.twitch.tv/embed?clip={1}&autoplay=false&tt_medium=clips_embed&parent=',
+                        'src' => '{protocol}://clips.twitch.tv/embed?clip={1}&autoplay=false&tt_medium=clips_embed&parent=www.example.com',
                         'scrolling' => 'no',
                         'allowfullscreen' => true,
                         'frameborder'     => 0,
