@@ -11,6 +11,8 @@ class EmbedTest extends TestCase
 {
     protected OEmbed $oembed;
 
+    protected Embed $embed;
+
     protected $data = [
         'type' => Embed::TYPE_OEMBED,
         'url' => 'http://youtu.be/dQw4w9WgXcQ',
