@@ -325,7 +325,7 @@ class Embed
     {
         $script = null;
         $doc = new DOMDocument();
-        $doc->loadHTML("<html><body>$html</body></html>", LIBXML_NOERROR);
+        $doc->loadHTML("<?xml encoding='utf-8' ?><html><body>$html</body></html>", LIBXML_NOERROR);
         $body = $doc->documentElement->lastChild;
 
         if (!$body || ($body && !$body->firstChild)) {
