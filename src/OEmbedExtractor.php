@@ -1,21 +1,13 @@
 <?php
 namespace Cohensive\OEmbed;
 
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-
 class OEmbedExtractor extends Extractor
 {
-    const SUCCESS = 200;
-
-    protected HttpClientInterface $client;
-
     public function __construct(string $provider, string $url, array $parameters = [])
     {
         $this->provider = $provider;
         $this->url = $url;
         $this->parameters = $parameters;
-        $this->client = HttpClient::create();
     }
 
     /**
@@ -23,21 +15,15 @@ class OEmbedExtractor extends Extractor
      */
     public function fetch(array $parameters = []): ?Embed
     {
-        $query = array_merge($parameters ?: $this->parameters, ['url' => $this->url]);
+        $data = array_merge($parameters ?: $this->parameters, ['url' => $this->url]);
+        $query = http_build_query($data);
+        $response = file_get_contents($this->provider . '?' . $query);
 
-        $response = $this->client->request(
-            'GET',
-            (string) $this->provider,
-            [
-                'query' => $query
-            ]
-        );
-
-        if ($response->getStatusCode() !== self::SUCCESS) {
+        if (!$response) {
             return null;
         }
 
-        $data = $response->toArray();
+        $data = json_decode($response, true);
 
         $embed = new Embed(Embed::TYPE_OEMBED, $this->url, $data);
 
