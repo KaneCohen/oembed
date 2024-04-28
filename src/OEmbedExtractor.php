@@ -17,7 +17,7 @@ class OEmbedExtractor extends Extractor
     {
         $data = array_merge($parameters ?: $this->parameters, ['url' => $this->url]);
         $query = http_build_query($data);
-        $response = file_get_contents($this->provider . '?' . $query);
+        $response = file_get_contents((string) $this->provider . '?' . $query);
 
         if (!$response) {
             return null;
