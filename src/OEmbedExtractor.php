@@ -1,6 +1,8 @@
 <?php
 namespace Cohensive\OEmbed;
 
+use Cohensive\OEmbed\Exceptions\ExtractorException;
+
 class OEmbedExtractor extends Extractor
 {
     public function __construct(string $provider, string $url, array $parameters = [])
@@ -24,6 +26,10 @@ class OEmbedExtractor extends Extractor
         }
 
         $data = json_decode($response, true);
+
+        if (!$data) {
+            throw new ExtractorException('Invalid JSON response from OEmbed provider. Url: ' . $this->url);
+        }
 
         $embed = new Embed(Embed::TYPE_OEMBED, $this->url, $data);
 

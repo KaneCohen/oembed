@@ -34,7 +34,7 @@ class OEmbed
     /**
      * Creates OEmbed instance.
      */
-    public function __construct(array $config = null)
+    public function __construct(?array $config = null)
     {
         if (is_array($config)) {
             $this->setConfig($config);

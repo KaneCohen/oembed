@@ -328,7 +328,7 @@ class Embed
         $doc->loadHTML("<?xml encoding='utf-8' ?><html><body>$html</body></html>", LIBXML_NOERROR);
         $body = $doc->documentElement->lastChild;
 
-        if (!$body || ($body && !$body->firstChild)) {
+        if (!$body || ($body && !$body->firstChild) || !($body instanceof \DOMElement)) {
             throw new HtmlParsingException();
         }
 

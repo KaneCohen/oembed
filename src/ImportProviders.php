@@ -1,4 +1,5 @@
 <?php
+
 namespace Cohensive\OEmbed;
 
 use \Exception;
