@@ -14,8 +14,9 @@ class Factory
     public function __construct(?array $config = null)
     {
         if (is_null($config)) {
-            $this->config = require('./resources/config.php');
+            $config = require(__DIR__ . '/../resources/config.php');
         }
+        $this->config = $config;
     }
 
     /**

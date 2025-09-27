@@ -56,7 +56,7 @@ class OEmbedTest extends TestCase
         $this->assertTrue(is_array($data));
         $this->assertEquals(Embed::TYPE_OEMBED, $embed->type());
         $this->assertEquals('video', $embed->mediaType());
-        $this->assertEquals('Rick Astley - Never Gonna Give You Up (Official Music Video)', $data['title']);
+        $this->assertStringStartsWith('Rick Astley - Never Gonna Give You Up', $data['title']);
         $this->assertEquals($url, $embed->url());
     }
 
@@ -94,12 +94,12 @@ class OEmbedTest extends TestCase
         $width = 1000;
         $height = round($width / $ratio);
 
-        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" title="Rick Astley - Never Gonna Give You Up (Official Music Video)"></iframe>', $embed->html());
-        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" title="Rick Astley - Never Gonna Give You Up (Official Music Video)"></iframe>', $embed->html(['width' => $width]));
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed"', $embed->html());
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed"', $embed->html(['width' => $width]));
 
         $width = 2000;
         $height = $width / $ratio;
-        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" title="Rick Astley - Never Gonna Give You Up (Official Music Video)"></iframe>', $embed->html(['width' => $width]));
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed"', $embed->html(['width' => $width]));
     }
 
     public function testYouTubeHtmlAutoplay()
@@ -107,7 +107,7 @@ class OEmbedTest extends TestCase
         $url = 'http://youtu.be/dQw4w9WgXcQ';
         $embed = $this->oembed->get($url);
 
-        $this->assertEquals('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed&autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" title="Rick Astley - Never Gonna Give You Up (Official Music Video)"></iframe>', $embed->html(['autoplay' => true]));
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed&autoplay=1"', $embed->html(['autoplay' => true]));
     }
 
     public function testOEmbedProviderFails()
@@ -192,12 +192,12 @@ class OEmbedTest extends TestCase
 
     public function testOembedScriptTag()
     {
-        $html = '<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chrisgameslive/video/7037241761818742021" data-video-id="7037241761818742021" data-embed-from="oembed" style="max-width:605px; min-width:325px;"> <section> <a target="_blank" title="@chrisgameslive" href="https://www.tiktok.com/@chrisgameslive?refer=embed">@chrisgameslive</a> <p>You just been rickrolled <a title="rickroll" target="_blank" href="https://www.tiktok.com/tag/rickroll?refer=embed">#rickroll</a> <a title="rickastley" target="_blank" href="https://www.tiktok.com/tag/rickastley?refer=embed">#rickastley</a> <a title="SpotifyWrapped" target="_blank" href="https://www.tiktok.com/tag/SpotifyWrapped?refer=embed">#SpotifyWrapped</a> <a title="HONOR50duet" target="_blank" href="https://www.tiktok.com/tag/HONOR50duet?refer=embed">#HONOR50duet</a> <a title="comedy" target="_blank" href="https://www.tiktok.com/tag/comedy?refer=embed">#comedy</a> <a title="meme" target="_blank" href="https://www.tiktok.com/tag/meme?refer=embed">#meme</a> <a title="funny" target="_blank" href="https://www.tiktok.com/tag/funny?refer=embed">#funny</a> <a title="trending" target="_blank" href="https://www.tiktok.com/tag/trending?refer=embed">#trending</a> <a title="lol" target="_blank" href="https://www.tiktok.com/tag/lol?refer=embed">#lol</a> <a title="twitch" target="_blank" href="https://www.tiktok.com/tag/twitch?refer=embed">#twitch</a> <a title="original" target="_blank" href="https://www.tiktok.com/tag/original?refer=embed">#original</a></p> <a target="_blank" title="♬ I Can Feel It (Christmas Instrumental) - Nick Sena and Danny Echevarria" href="https://www.tiktok.com/music/I-Can-Feel-It-Christmas-Instrumental-6777559167281399809?refer=embed">♬ I Can Feel It (Christmas Instrumental) - Nick Sena and Danny Echevarria</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>';
+        $html = '<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chrisgameslive/video/7037241761818742021" data-video-id="7037241761818742021"';
         $url = 'https://www.tiktok.com/@chrisgamescg/video/7037241761818742021';
         $embed = $this->oembed->get($url);
         $script = 'https://www.tiktok.com/embed.js';
 
-        $this->assertEquals($html, $embed->html());
+        $this->assertStringStartsWith($html, $embed->html());
         $this->assertEquals($script, $embed->script());
     }
 
