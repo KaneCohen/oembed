@@ -165,10 +165,19 @@ class HtmlBuilder
         $width = $options['width'] ?? null;
         $height = $options['height'] ?? null;
 
-        if (isset($attrs['width']) && isset($attrs['height'])) {
+        // If embed output dimensions are set and numeric use them to calculate output with correct aspect ratio.
+        // If dimensions are not numeric attempt to set them based on manual input.
+        if (isset($attrs['width'])
+            && isset($attrs['height'])
+            && is_numeric($attrs['width'])
+            && is_numeric($attrs['height'])
+        ) {
             $ratio = $attrs['width'] / $attrs['height'];
             $attrs['width'] = $width ?: round(($height ?: $attrs['height']) * $ratio);
             $attrs['height'] = $height ?: round($attrs['width'] / $ratio);
+        } elseif ($width || $height) {
+            $attrs['width'] = $width ?: $attrs['width'];
+            $attrs['height'] = $height ?: $attrs['height'];
         }
 
         $typeOptions = $this->getTypeOptions($globalOptions);

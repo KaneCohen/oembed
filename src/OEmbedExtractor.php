@@ -17,22 +17,56 @@ class OEmbedExtractor extends Extractor
      */
     public function fetch(array $parameters = []): ?Embed
     {
-        $data = array_merge($parameters ?: $this->parameters, ['url' => $this->url]);
-        $query = http_build_query($data);
-        $response = file_get_contents((string) $this->provider . '?' . $query);
+        $requestUrl = $this->buildRequestUrl($parameters);
+        $response = file_get_contents($requestUrl);
 
         if (!$response) {
             return null;
         }
 
-        $data = json_decode($response, true);
+        $oembedData = json_decode($response, true);
 
-        if (!$data) {
+        if (!$oembedData) {
             throw new ExtractorException('Invalid JSON response from OEmbed provider. Url: ' . $this->url);
         }
 
-        $embed = new Embed(Embed::TYPE_OEMBED, $this->url, $data);
+        return new Embed(Embed::TYPE_OEMBED, $this->url, $oembedData);
+    }
 
-        return $embed;
+    /**
+     * Builds the complete request URL with all parameters.
+     */
+    private function buildRequestUrl(array $parameters = []): string
+    {
+        $baseUrl = explode('?', $this->provider)[0];
+        $existingParams = $this->extractExistingParams();
+        $finalParams = $this->mergeAllParameters($existingParams, $parameters);
+        return $baseUrl . '?' . http_build_query($finalParams);
+    }
+
+    /**
+     * Extracts existing query parameters from the provider URL.
+     */
+    private function extractExistingParams(): array
+    {
+        $queryString = parse_url($this->provider, PHP_URL_QUERY);
+        $existingParams = [];
+
+        if ($queryString) {
+            parse_str($queryString, $existingParams);
+        }
+
+        return $existingParams;
+    }
+
+    /**
+     * Merges all parameters in the correct priority order.
+     */
+    private function mergeAllParameters(array $existingParams, array $parameters): array
+    {
+        $requestParams = $parameters ?: $this->parameters;
+        $mandatoryParams = ['url' => $this->url];
+
+        return array_merge($existingParams, $requestParams, $mandatoryParams);
     }
 }

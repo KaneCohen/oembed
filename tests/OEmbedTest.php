@@ -94,6 +94,7 @@ class OEmbedTest extends TestCase
         $width = 1000;
         $height = round($width / $ratio);
 
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed"', $embed->html(['width' => '100%', 'height' => '100%']));
         $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed"', $embed->html());
         $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/dQw4w9WgXcQ?feature=oembed"', $embed->html(['width' => $width]));
 
@@ -214,5 +215,22 @@ class OEmbedTest extends TestCase
         $html = '<blockquote class="twitter-tweet" data-theme="light"><p lang="qme" dir="ltr"> <a href="https://t.co/EKXsyw0IdU">pic.twitter.com/EKXsyw0IdU</a></p>&mdash; Night&#39;s Cavalry (@hunter11_wolf) <a href="https://twitter.com/hunter11_wolf/status/1484450337247404034?ref_src=twsrc%5Etfw">January 21, 2022</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>';
 
         $this->assertEquals($html, str_replace(["\r", "\n"], '', $embed->html()));
+    }
+
+    public function testOEmbedSoundCloudUrl()
+    {
+        $url = 'https://soundcloud.com/user-110737934/tallest-tree-alternate';
+        $embed = $this->oembed->get($url);
+
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="100%" height="200" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1171488400&show_artwork=true"', $embed->html(['height' => 200]));
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1171488400&show_artwork=true"', $embed->html());
+    }
+
+    public function testOEmbedNonNumericDimensions()
+    {
+        $url = 'http://youtu.be/dQw4w9WgXcQ';
+        $embed = $this->oembed->get($url);
+
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="100%" height="300" src="https://www.y', $embed->html(['width' => '100%', 'height' => 300]));
     }
 }

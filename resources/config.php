@@ -1318,9 +1318,8 @@ return [
                 '|^https?://www\\.socialexplorer\\.com/.*/embed$|i',
             ]
         ],
-        'https://soundcloud.com/oembed' => [
+        'https://soundcloud.com/oembed?format=json' => [
             'schemes' => [
-                '|^https?://soundcloud\\.com/.*$|i',
                 '|^https?://soundcloud\\.com/.*$|i',
                 '|^https?://soundcloud\\.app\\.goog\\.gl/.*$|i',
             ]
