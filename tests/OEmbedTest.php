@@ -232,5 +232,6 @@ class OEmbedTest extends TestCase
         $embed = $this->oembed->get($url);
 
         $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="100%" height="300" src="https://www.y', $embed->html(['width' => '100%', 'height' => 300]));
+        $this->assertStringStartsWith('<iframe sandbox="allow-scripts allow-popups allow-same-origin allow-presentation" layout="responsive" width="100%" height="100%" src="https://www.y', $embed->html(['width' => '100%', 'height' => '100%']));
     }
 }

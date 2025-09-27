@@ -216,7 +216,7 @@ class HtmlBuilder
     /**
      * Apply dimensions without aspect ratio calculations.
      */
-    protected function applyManualDimensions(array $attrs, ?int $width, ?int $height): array
+    protected function applyManualDimensions(array $attrs, mixed $width, mixed $height): array
     {
         if ($width) {
             $attrs['width'] = $width;
