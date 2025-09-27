@@ -9,7 +9,7 @@ class HtmlBuilder
 
     public function __construct(
         protected string $type,
-        protected string|array $html,
+        protected string | array $html,
         protected ?string $script = null
     ) {
     }
@@ -161,44 +161,94 @@ class HtmlBuilder
      */
     protected function applyOptions(array $attrs, array $options, array $globalOptions): array
     {
-        $options = array_merge($globalOptions['attributes'] ?? [], $options);
-        $width = $options['width'] ?? null;
-        $height = $options['height'] ?? null;
-
-        // If embed output dimensions are set and numeric use them to calculate output with correct aspect ratio.
-        // If dimensions are not numeric attempt to set them based on manual input.
-        if (isset($attrs['width'])
-            && isset($attrs['height'])
-            && is_numeric($attrs['width'])
-            && is_numeric($attrs['height'])
-        ) {
-            $ratio = $attrs['width'] / $attrs['height'];
-            $attrs['width'] = $width ?: round(($height ?: $attrs['height']) * $ratio);
-            $attrs['height'] = $height ?: round($attrs['width'] / $ratio);
-        } elseif ($width || $height) {
-            $attrs['width'] = $width ?: $attrs['width'];
-            $attrs['height'] = $height ?: $attrs['height'];
-        }
+        $mergedOptions = array_merge($globalOptions['attributes'] ?? [], $options);
+        $attrs = $this->applyDimensions($attrs, $mergedOptions);
+        $attrs = $this->applyAutoplay($attrs, $mergedOptions);
 
         $typeOptions = $this->getTypeOptions($globalOptions);
 
-        if ($options['autoplay'] ?? false) {
-            $attrs['autoplay'] = $options['autoplay'];
+        return array_filter(
+            array_merge($typeOptions, $mergedOptions, $attrs),
+            fn($value) => $value !== null
+        );
+    }
 
-            // We can remove autoplay option if type is "iframe" after we change "src" attribute.
-            if ($this->type === self::TYPE_IFRAME) {
-                $attrs['src'] = $this->addUrlParam($attrs['src'], sprintf('%s=%s', 'autoplay', $attrs['autoplay']));
-                unset($options['autoplay']);
-                unset($attrs['autoplay']);
-            }
+    /**
+     * Apply width and height dimensions with aspect ratio calculations.
+     */
+    protected function applyDimensions(array $attrs, array $options): array
+    {
+        $width = $options['width'] ?? null;
+        $height = $options['height'] ?? null;
+
+        if ($this->hasNumericDimensions($attrs)) {
+            $attrs = $this->applyAspectRatioDimensions($attrs, $width, $height);
+        } elseif ($width || $height) {
+            $attrs = $this->applyManualDimensions($attrs, $width, $height);
         }
 
-        return array_filter(
-            array_merge($typeOptions, $options, $attrs),
-            function ($v) {
-                return $v !== null;
-            }
-        );
+        return $attrs;
+    }
+
+    /**
+     * Check if attributes have numeric width and height values.
+     */
+    protected function hasNumericDimensions(array $attrs): bool
+    {
+        return isset($attrs['width'], $attrs['height'])
+            && is_numeric($attrs['width'])
+            && is_numeric($attrs['height']);
+    }
+
+    /**
+     * Apply dimensions while maintaining aspect ratio.
+     */
+    protected function applyAspectRatioDimensions(array $attrs, mixed $width, mixed $height): array
+    {
+        $ratio = $attrs['width'] / $attrs['height'];
+
+        $attrs['width'] = $width ?: round(($height ?: $attrs['height']) * $ratio);
+        $attrs['height'] = $height ?: round($attrs['width'] / $ratio);
+
+        return $attrs;
+    }
+
+    /**
+     * Apply dimensions without aspect ratio calculations.
+     */
+    protected function applyManualDimensions(array $attrs, ?int $width, ?int $height): array
+    {
+        if ($width) {
+            $attrs['width'] = $width;
+        }
+
+        if ($height) {
+            $attrs['height'] = $height;
+        }
+
+        return $attrs;
+    }
+
+    /**
+     * Handle autoplay functionality, especially for iframe embeds.
+     */
+    protected function applyAutoplay(array $attrs, array &$options): array
+    {
+        if (! ($options['autoplay'] ?? false)) {
+            return $attrs;
+        }
+
+        if ($this->type === self::TYPE_IFRAME) {
+            $attrs['src'] = $this->addUrlParam(
+                $attrs['src'],
+                sprintf('autoplay=%s', $options['autoplay'])
+            );
+            unset($options['autoplay']);
+        } else {
+            $attrs['autoplay'] = $options['autoplay'];
+        }
+
+        return $attrs;
     }
 
     /**
